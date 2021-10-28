@@ -22,12 +22,19 @@ async function run() {
 	try {
 		await client.connect();
 		const database = client.db("dark-thunder");
-		const ridesCollection = database.collection("ride");
+		const ridesCollection = database.collection("rides");
+
+		// GET DATA
+		app.get("/rides", async (req, res) => {
+			const result = await ridesCollection.find({}).toArray();
+			res.send(result);
+		});
 
 		// POST RIDE
 		app.post("/rides", async (req, res) => {
 			const ride = req.body;
-			console.log(ride);
+			const result = await ridesCollection.insertOne(ride);
+			console.log(result);
 		});
 	} finally {
 		// await client.close();
