@@ -23,6 +23,7 @@ async function run() {
 		await client.connect();
 		const database = client.db("dark-thunder");
 		const ridesCollection = database.collection("rides");
+		const orderRides = database.collection("orders");
 
 		// GET DATA
 		app.get("/rides", async (req, res) => {
@@ -35,6 +36,20 @@ async function run() {
 			const ride = req.body;
 			const result = await ridesCollection.insertOne(ride);
 			console.log(result);
+		});
+
+		// POST order
+		app.post("/orders", async (req, res) => {
+			const orderInfo = req.body;
+			const result = await orderRides.insertOne(orderInfo);
+			res.json(result);
+			console.log("ordered added", result);
+		});
+		// order info get
+		app.get("/orders", async (req, res) => {
+			const result = await orderRides.find({}).toArray();
+			res.send(result);
+			console.log("Get order info");
 		});
 	} finally {
 		// await client.close();
