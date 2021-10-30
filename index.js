@@ -58,6 +58,14 @@ async function run() {
 			const result = await orderRides.find({ email: email }).toArray();
 			res.send(result);
 		});
+		// DELETE from myOrders
+		app.delete("/myorders/:id", async (req, res) => {
+			const id = req.params.id;
+			const query = { _id: ObjectId(id) };
+			const result = await orderRides.deleteOne(query);
+
+			res.json(result);
+		});
 
 		// GET all order ride
 		app.get("/orders", async (req, res) => {
