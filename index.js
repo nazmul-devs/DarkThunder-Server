@@ -51,6 +51,19 @@ async function run() {
 			res.send(result);
 			console.log("Get order info");
 		});
+
+		// get order info by email
+		app.get("/orders/:email", async (req, res) => {
+			const email = req.params.email;
+			const result = await orderRides.find({ email: email }).toArray();
+			res.send(result);
+		});
+
+		// GET all order ride
+		app.get("/orders", async (req, res) => {
+			const result = await orderRides.find({}).toArray();
+			res.send(result);
+		});
 	} finally {
 		// await client.close();
 	}
