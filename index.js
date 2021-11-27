@@ -50,13 +50,12 @@ async function run() {
 		app.get("/orders", async (req, res) => {
 			const result = await orderRides.find({}).toArray();
 			res.send(result);
-			console.log("Get order info");
 		});
 
 		// get order info by email
 		app.get("/orders/:email", async (req, res) => {
 			const email = req.params.email;
-			const result = await orderRides.find({ email: email }).toArray();
+			const result = await orderRides.find({ userEmail: email }).toArray();
 			res.send(result);
 		});
 		// DELETE from myOrders
